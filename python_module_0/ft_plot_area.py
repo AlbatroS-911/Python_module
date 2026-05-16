@@ -1,16 +1,16 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    ft_plot_area.py                                    :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: tokrabem <tokrabem@student.42antananari    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/04/28 15:18:44 by tokrabem          #+#    #+#              #
-#    Updated: 2026/04/28 15:21:12 by tokrabem         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+# ****************************************************************************#
+#                                                                             #
+#                                                         :::      ::::::::   #
+#    ft_plot_area.py                                    :+:      :+:    :+:   #
+#                                                     +:+ +:+         +:+     #
+#    By: tokrabem <tokrabem@student.42antananari    +#+  +:+       +#+        #
+#                                                 +#+#+#+#+#+   +#+           #
+#    Created: 2026/04/28 19:45:35 by tokrabem          #+#    #+#             #
+#    Updated: 2026/05/11 06:40:22 by tokrabem         ###   ########.fr       #
+#                                                                             #
+# ****************************************************************************#
 
-def	ft_plot_area():
-	length = int(input("Enter length: "))
-	width = int(input("Enter width: "))
-	print("Ploat area: ", length * width)
+def ft_plot_area() -> None:
+    length = int(input("Enter length: "))
+    width = int(input("Enter width: "))
+    print("Ploat area: ", length * width)
