@@ -6,7 +6,7 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/15 20:44:49 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/16 07:10:09 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/05/19 13:18:39 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -32,7 +32,6 @@ def test_temperature() -> None:
         except Exception as error:
             print(f"Input data is '{converted_data}'")
             print("Caught input_temperature error:", error)
-
     except Exception as error_exception:
         print(f"Input data '{input_data}'")
         print("Caught input_temperature error: ", error_exception)
