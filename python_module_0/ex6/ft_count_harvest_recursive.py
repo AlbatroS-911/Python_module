@@ -1,16 +1,22 @@
 # ****************************************************************************#
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_plot_area.py                                    :+:      :+:    :+:   #
+#    ft_count_harvest_recursive.py                      :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: tokrabem <tokrabem@student.42antananari    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/04/28 19:45:35 by tokrabem          #+#    #+#             #
-#    Updated: 2026/05/11 06:40:22 by tokrabem         ###   ########.fr       #
+#    Created: 2026/04/28 16:34:44 by tokrabem          #+#    #+#             #
+#    Updated: 2026/04/28 19:06:57 by tokrabem         ###   ########.fr       #
 #                                                                             #
 # ****************************************************************************#
 
-def ft_plot_area() -> None:
-    length = int(input("Enter length: "))
-    width = int(input("Enter width: "))
-    print("Ploat area: ", length * width)
+def ft_count_harvest_recursive() -> None:
+    harvest_days = int(input("Days until harvest: "))
+
+    def count_remaining_days(days):
+        if days > harvest_days:
+            print("Harvest time!")
+            return
+        print(f"Day {days}")
+        count_remaining_days(days + 1)
+    count_remaining_days(1)

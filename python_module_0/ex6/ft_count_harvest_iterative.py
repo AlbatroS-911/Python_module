@@ -1,20 +1,18 @@
 # ****************************************************************************#
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_harvest_total.py                                :+:      :+:    :+:   #
+#    ft_count_harvest_iterative.py                      :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: tokrabem <tokrabem@student.42antananari    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/04/28 15:25:33 by tokrabem          #+#    #+#             #
-#    Updated: 2026/04/28 16:09:01 by tokrabem         ###   ########.fr       #
+#    Created: 2026/04/28 16:30:18 by tokrabem          #+#    #+#             #
+#    Updated: 2026/04/28 19:14:25 by tokrabem         ###   ########.fr       #
 #                                                                             #
 # ****************************************************************************#
 
-def ft_harvest_total() -> None:
-    days = harvest_total = 0
-    while (days < 3):
-        print(f"Days {days} harvest: ", end="")
-        harvest = int((input()))
-        harvest_total += harvest
-        days += 1
-    print("Total harvest: ", harvest_total)
+def ft_count_harvest_iterative() -> None:
+    harvesting_days = int(input("Days until harvest: "))
+    for i in range(1, harvesting_days + 1, 1):
+        print(f"Day {i}")
+        i += 1
+    print("Harvest time!")

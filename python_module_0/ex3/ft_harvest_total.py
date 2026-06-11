@@ -1,22 +1,20 @@
 # ****************************************************************************#
 #                                                                             #
 #                                                         :::      ::::::::   #
-#    ft_count_harvest_recursive.py                      :+:      :+:    :+:   #
+#    ft_harvest_total.py                                :+:      :+:    :+:   #
 #                                                     +:+ +:+         +:+     #
 #    By: tokrabem <tokrabem@student.42antananari    +#+  +:+       +#+        #
 #                                                 +#+#+#+#+#+   +#+           #
-#    Created: 2026/04/28 16:34:44 by tokrabem          #+#    #+#             #
-#    Updated: 2026/04/28 19:06:57 by tokrabem         ###   ########.fr       #
+#    Created: 2026/04/28 15:25:33 by tokrabem          #+#    #+#             #
+#    Updated: 2026/04/28 16:09:01 by tokrabem         ###   ########.fr       #
 #                                                                             #
 # ****************************************************************************#
 
-def ft_count_harvest_recursive() -> None:
-    harvest_days = int(input("Days until harvest: "))
-
-    def count_remaining_days(days):
-        if days > harvest_days:
-            print("Harvest time!")
-            return
-        print("Days ", days)
-        count_remaining_days(days + 1)
-    count_remaining_days(1)
+def ft_harvest_total() -> None:
+    days = harvest_total = 0
+    while (days < 3):
+        days += 1
+        print(f"Day {days} harvest: ", end="")
+        harvest = int((input()))
+        harvest_total += harvest
+    print("Total harvest:", harvest_total)

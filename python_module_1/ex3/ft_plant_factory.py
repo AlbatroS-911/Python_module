@@ -6,15 +6,15 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/11 11:02:04 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/11 17:15:35 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/06/11 12:58:08 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 class Plant:
-    def __init__(self, p_name: str, p_height: float, p_age: int) -> None:
-        self.name = p_name
-        self.height = p_height
-        self.p_age = p_age
+    def __init__(self, name: str, height: float, age: int) -> None:
+        self.name = name
+        self.height = height
+        self.p_age = age
 
     def age(self) -> None:
         self.p_age += 1

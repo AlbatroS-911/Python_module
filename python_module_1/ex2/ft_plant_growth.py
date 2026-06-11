@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # ************************************************************************* #
 #                                                                           #
 #                                                      :::      ::::::::    #
@@ -7,15 +6,15 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/11 10:49:28 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/11 13:58:01 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/06/11 12:58:43 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 class Plant:
-    def __init__(self, p_name: str, p_height: float, p_age: int) -> None:
-        self.name = p_name
-        self.height = p_height
-        self.p_age = p_age
+    def __init__(self, name: str, height: float, age: int) -> None:
+        self.name = name
+        self.height = height
+        self.p_age = age
 
     def age(self) -> None:
         self.p_age += 1
@@ -28,11 +27,11 @@ class Plant:
 
 
 if __name__ == "__main__":
-    rose = Plant("Rose", round(25.0, 1), 30)
+    rose = Plant("Rose", 25, 30)
     initial_height: float = rose.height
     print("=== Garden Plant Growth ===")
     rose.show()
-    for i in range(1, 8, 1):
+    for i in range(1, 8):
         rose.age()
         rose.grow(0.8)
         print(f"=== Day {i} ===")
