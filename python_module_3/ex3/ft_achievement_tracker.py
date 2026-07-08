@@ -6,13 +6,11 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/20 18:17:09 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/26 17:07:32 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/08 07:17:24 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import random
-
-print("=== Achievement Tracker System ===\n")
 
 
 def all_achievements() -> list[str]:
@@ -43,6 +41,8 @@ def gen_player_achievements() -> set[str]:
 
 
 if __name__ == "__main__":
+    print("=== Achievement Tracker System ===")
+    print()
     a = gen_player_achievements()
     b = gen_player_achievements()
     c = gen_player_achievements()

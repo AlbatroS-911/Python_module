@@ -6,13 +6,11 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/27 13:05:37 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/27 15:07:17 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/08 08:43:33 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import random
-
-print("=== Game Data Alchemist ===")
 
 
 def fun() -> None:
@@ -37,4 +35,6 @@ def fun() -> None:
 
 
 if __name__ == "__main__":
+    print("=== Game Data Alchemist ===")
+    print()
     fun()

@@ -6,7 +6,7 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/11 10:49:28 by tokrabem        #+#    #+#               #
-#  Updated: 2026/06/11 12:58:43 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/06/22 11:13:51 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -27,7 +27,7 @@ class Plant:
 
 
 if __name__ == "__main__":
-    rose = Plant("Rose", 25, 30)
+    rose: Plant = Plant("Rose", 25, 30)
     initial_height: float = rose.height
     print("=== Garden Plant Growth ===")
     rose.show()
@@ -37,3 +37,4 @@ if __name__ == "__main__":
         print(f"=== Day {i} ===")
         rose.show()
     print(f"Growth this week: {round(rose.height - initial_height, 1)}cm")
+    

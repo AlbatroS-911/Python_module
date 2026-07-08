@@ -6,21 +6,20 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/19 20:48:24 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/26 14:40:38 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/07 21:44:28 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import sys
 
-print("=== Player Score Analytics ===")
-
 
 def score_analytics() -> None:
-    total_args = len(sys.argv[1:])
-    score: list = []
+    total_args: int = 0
+    score: list[int] = []
     for arg in sys.argv[1:]:
         try:
-            score = score + [int(arg)]
+            score += [int(arg)]
+            total_args += 1
         except ValueError:
             print(f"Invalid parameter: {arg!r}")
     if (total_args == 0):
@@ -37,4 +36,5 @@ def score_analytics() -> None:
 
 
 if __name__ == "__main__":
+    print("=== Player Score Analytics ===")
     score_analytics()

@@ -6,12 +6,11 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/26 17:08:21 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/27 06:13:10 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/08 07:36:07 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import sys
-print("=== Inventory System Analysis ===")
 
 
 def parse_and_add() -> dict[str, int]:
@@ -19,10 +18,14 @@ def parse_and_add() -> dict[str, int]:
     for param in sys.argv[1:]:
         item = param.split(':')
         if len(item) != 2:
-            print(f"Error - Invalid parameter '{param!r}")
+            print(f"Error - Invalid parameter {param!r}")
             continue
-        key = item[0]
-        value = item[1]
+        key, value = item[0], item[1]
+        if not key:
+            continue
+        if key != key.strip() or value != value.strip():
+            print(f"Error - Invalid parameter {param!r}")
+            continue
         if key in inventory:
             print(f"Redundant item {key!r} - discarding")
             continue
@@ -36,6 +39,8 @@ def parse_and_add() -> dict[str, int]:
 
 
 if __name__ == "__main__":
+    print("=== Inventory System Analysis ===")
+    print()
     inventory: dict[str, int] = parse_and_add()
     if (inventory):
         print(f"Got inventory: {inventory}")

@@ -6,11 +6,9 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/19 09:46:12 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/19 18:25:02 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/06 17:43:04 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
-
-print("=== Garden Watering System ===")
 
 
 class GardenError(Exception):
@@ -42,12 +40,24 @@ def test_water_system() -> None:
         water_plant("Carrots")
     except PlantError as error:
         print(f"Caught PLantError: {error}")
-        print("...ending tests and returning to main")
+        print(".. ending tests and returning to main")
     finally:
         print("Closing water system")
-        print("\nCleanup always happens, even with errors!")
-    
+    print()
+    print("Testing invalid plants...")
+    try:
+        water_plant("Tomato")
+        water_plant("lettuce")
+        water_plant("Carrots")
+    except PlantError as error:
+        print(f"Caught PLantError: {error}")
+        print(".. ending tests and returning to main")
+        return
+    finally:
+        print("Closing water system")
 
 
 if __name__ == "__main__":
+    print("=== Garden Watering System ===")
     test_water_system()
+    print("\nCleanup always happens, even with errors!")

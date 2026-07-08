@@ -14,9 +14,9 @@ def monitor() -> None:
     print("Plant : Rose")
     print("Height : 25cm")
     print("Age : 30 days")
-    print("\n=== End of Program ===")
 
 
 if __name__ == "__main__":
     print("=== Welcome to My Garden ===")
     monitor()
+    print("\n=== End of Program ===")

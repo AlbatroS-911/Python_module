@@ -6,7 +6,7 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/26 21:04:13 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/27 16:04:53 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/08 08:35:54 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
@@ -35,6 +35,8 @@ def consume_event(
 
 
 if __name__ == "__main__":
+    print("=== Game Data Stream Processor ===")
+    print()
     first_event = gen_event()
     for i in range(1000):
         (name, action) = next(first_event)

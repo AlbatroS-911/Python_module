@@ -6,13 +6,11 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/19 18:27:09 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/26 14:40:47 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/07 21:15:38 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 import sys
-
-print("=== Command Quest ===")
 
 
 def count_arguments() -> None:
@@ -29,4 +27,5 @@ def count_arguments() -> None:
 
 
 if __name__ == "__main__":
+    print("=== Command Quest ===")
     count_arguments()

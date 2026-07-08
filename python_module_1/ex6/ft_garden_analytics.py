@@ -6,31 +6,43 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/12 10:27:07 by tokrabem        #+#    #+#               #
-#  Updated: 2026/06/11 13:12:01 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/06/22 12:45:28 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 
 class Plant(object):
-    def __init__(self, name: str, height: float, age: int) -> None:
-        self.p_name = name
-        self.p_height = height
-        self.p_age = age
+    def __init__(self, p_name: str, p_height: float, p_age: int) -> None:
+        self._name = p_name
+        self._height = 0.0
+        self._age = 0
+        if p_age < 0:
+            print("Error, age can't be negative")
+            print("Age update rejected")
+        else:
+            self._age = p_age
+        if p_height < 0:
+            print("Error, height can't be negative")
+            print("Age update rejected")
+        else:
+            self._height = p_height
 
     def set_age(self, new_age: int) -> None:
         if (new_age < 0):
-            return
+            print(f"{self._name}: Error, age can't be negative")
+            print("Age update rejected")
         else:
-            self.p_age = new_age
+            self._age = new_age
 
-    def set_height(self, new_height: float) -> None:
-        if (new_height < 0):
-            return
+    def set_height(self, new_heigth: float) -> None:
+        if (new_heigth < 0):
+            print(f"{self._name}: Error, height can't be negative")
+            print("Height update rejected")
         else:
-            self.p_height = new_height
+            self._height = new_heigth
 
     def show(self) -> None:
-        n, h, a = self.p_name, round(self.p_height, 1), self.p_age
+        n, h, a = self._name, round(self._height, 1), self._age
         print(f"{n}: {h}cm, {a} days old")
 
     @classmethod
@@ -68,18 +80,24 @@ class Flower(Plant):
         super().show()
         print(f" Color: {self.color}")
         if not self._bloomed:
-            print(f" {self.p_name} has not bloomed yet")
+            print(f" {self._name} has not bloomed yet")
         else:
-            print(f" {self.p_name} is blooming beautifully")
+            print(f" {self._name} is blooming beautifully")
         self._stat.show += 1
 
     def age(self, new_age: int) -> None:
         super().set_age(new_age)
-        self._stat.age += 1
+        if new_age < 0:
+            return
+        else:
+            self._stat.age += 1
 
     def grow(self, new_height: float) -> None:
         super().set_height(new_height)
-        self._stat.grow += 1
+        if new_height < 0:
+            return
+        else:
+            self._stat.grow += 1
 
     def bloom(self) -> None:
         self._bloomed = True
@@ -104,7 +122,7 @@ class Tree(Plant):
             self.grow = 0
             self.age = 0
             self.show = 0
-            self.shade = 1
+            self.shade = 0
 
     def __init__(self, tn: str, th: float, ta: int, td: float) -> None:
         super().__init__(tn, th, ta)
@@ -118,15 +136,21 @@ class Tree(Plant):
 
     def age(self, new_age: int) -> None:
         super().set_age(new_age)
-        self._stat.age += 1
+        if new_age < 0:
+            return
+        else:
+            self._stat.age += 1
 
     def grow(self, new_height: float) -> None:
         super().set_height(new_height)
-        self._stat.grow += 1
+        if new_height < 0:
+            return
+        else:
+            self._stat.grow += 1
 
     def shade(self) -> None:
         print(
-            f"Tree {self.p_name} now produces a shade of {self.p_height}cm"
+            f"Tree {self._name} now produces a shade of {self._height}cm"
             f" long and {self.trunk_diam}cm wide."
         )
         self._stat.shade += 1
@@ -135,8 +159,7 @@ class Tree(Plant):
 def display_stat(stat: Flower.FlowerStat | Tree.TreeStat) -> None:
     print(f"[statistics for {stat.name}]")
     print(f"Stats: {stat.grow} grow, {stat.age} age, {stat.show} show")
-    if stat.shade:
-        print(f" {stat.shade - 1} shade")
+    print(f" {stat.shade} shade")
 
 
 def main() -> None:
@@ -145,23 +168,23 @@ def main() -> None:
     Plant.check_age(30)
     Plant.check_age(400)
     print("\n=== Flower")
-    rose = Flower("Rose", 15.0, 10, "Red")
+    rose: Flower = Flower("Rose", 15.0, 10, "Red")
     rose.show()
     display_stat(rose._stat)
-    print(f"[asking the {rose.p_name.lower()} to grow and bloom]")
+    print(f"[asking the {rose._name.lower()} to grow and bloom]")
     rose.grow(23.0)
     rose.bloom()
     rose.show()
     display_stat(rose._stat)
     print("\n=== Tree")
-    oak = Tree("Oak", 200.0, 365, 5.0)
+    oak: Tree = Tree("Oak", 200.0, 365, 5.0)
     oak.show()
     display_stat(oak._stat)
-    print(f"[asking the {oak.p_name.lower()} to produce shade]")
+    print(f"[asking the {oak._name.lower()} to produce shade]")
     oak.shade()
     display_stat(oak._stat)
     print("\n=== Seed")
-    sunflower = Seed("Sunflower", 80.0, 45, "yellow")
+    sunflower: Seed = Seed("Sunflower", 80.0, 45, "yellow")
     sunflower.show()
     print("[make sunflower grow, age and bloom]")
     sunflower.grow(110.0)

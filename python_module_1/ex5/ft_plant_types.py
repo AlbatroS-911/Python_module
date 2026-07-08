@@ -6,19 +6,51 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/11 18:48:11 by tokrabem        #+#    #+#               #
-#  Updated: 2026/06/11 18:10:59 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/06/22 12:23:15 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
 
 
 class Plant(object):
     def __init__(self, p_name: str, p_height: float, p_age: int) -> None:
-        self.p_name = p_name
-        self.p_height = p_height
-        self.p_age = p_age
+        self._name = p_name
+        self._height = 0.0
+        self._age = 0
+        if p_age < 0:
+            print("Error, age can't be negative")
+            print("Age update rejected")
+        else:
+            self._age = p_age
+        if p_height < 0:
+            print("Error, height can't be negative")
+            print("Age update rejected")
+        else:
+            self._height = p_height
+
+    def get_age(self) -> int:
+        return self._age
+
+    def set_age(self, new_age: int) -> None:
+        if (new_age < 0):
+            print(f"{self._name}: Error, age can't be negative")
+            print("Age update rejected")
+        else:
+            self._age = new_age
+            print(f"Age updated: {self._age} days")
+
+    def get_height(self) -> float:
+        return self._height
+
+    def set_height(self, new_heigth: float) -> None:
+        if (new_heigth < 0):
+            print(f"{self._name}: Error, height can't be negative")
+            print("Height update rejected")
+        else:
+            self._height = new_heigth
+            print(f"Height update: {self._height}cm")
 
     def show(self) -> None:
-        n, h, a = self.p_name, round(self.p_height, 1), self.p_age
+        n, h, a = self._name, round(self._height, 1), self._age
         print(f"{n}: {h}cm, {a} days old")
 
 
@@ -32,9 +64,9 @@ class Flower(Plant):
         super().show()
         print(f" Color: {self.color}")
         if not self._bloomed:
-            print(f" {self.p_name} has not bloomed yet")
+            print(f" {self._name} has not bloomed yet")
         else:
-            print(f" {self.p_name} is blooming beautifully")
+            print(f" {self._name} is blooming beautifully")
 
     def bloom(self) -> None:
         self._bloomed = True
@@ -50,7 +82,7 @@ class Tree(Plant):
         print(f" Trunk diameter: {self.trunk_diameter}cm")
 
     def produce_shade(self) -> None:
-        n, h, td = self.p_name, round(self.p_height, 1), self.trunk_diameter
+        n, h, td = self._name, round(self._height, 1), self.trunk_diameter
         print(f"Tree {n} now produces a shade of {h}cm long and {td}cm wide")
 
 
@@ -66,31 +98,31 @@ class Vegetable(Plant):
         print(f" Nutrional value : {self.nutritional_value}")
 
     def grow(self, height_growth: float) -> None:
-        self.p_height = height_growth
+        self._height = height_growth
 
     def age(self, age_growth: int) -> None:
-        self.p_age += age_growth
+        self._age += age_growth
         self.nutritional_value += age_growth
 
 
 def main() -> None:
     print("=== Garden Plant Types ===")
-    rose = Flower("Rose", 15.0, 10, "red")
-    oak = Tree("Oak", 200.0, 365, 5.0)
-    tomato = Vegetable("Tomato", 5.0, 10, "April", 0)
+    rose: Flower = Flower("Rose", 15.0, 10, "red")
+    oak: Tree = Tree("Oak", 200.0, 365, 5.0)
+    tomato: Vegetable = Vegetable("Tomato", 5.0, 10, "April", 0)
     print("=== Flower")
     rose.show()
-    print(f"[asking the {rose.p_name.lower()} to bloom]")
+    print(f"[asking the {rose._name.lower()} to bloom]")
     rose.bloom()
     rose.show()
     print("\n=== Tree")
     oak.show()
-    print(f"[asking the {oak.p_name.lower()} to produce shade]")
+    print(f"[asking the {oak._name.lower()} to produce shade]")
     oak.produce_shade()
     print("\n=== Vegetable")
     tomato.show()
     new_age = 20
-    print(f"[make {tomato.p_name.lower()} grow and age for {new_age} days]")
+    print(f"[make {tomato._name.lower()} grow and age for {new_age} days]")
     tomato.grow(47.0)
     tomato.age(new_age)
     tomato.show()

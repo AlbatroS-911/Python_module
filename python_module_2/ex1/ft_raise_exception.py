@@ -6,11 +6,9 @@
 #  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
 #                                              +#+#+#+#+#+   +#+            #
 #  Created: 2026/05/15 20:44:49 by tokrabem        #+#    #+#               #
-#  Updated: 2026/05/19 13:18:39 by tokrabem        ###   ########.fr        #
+#  Updated: 2026/07/06 17:42:59 by tokrabem        ###   ########.fr        #
 #                                                                           #
 # ************************************************************************* #
-
-print("=== Garden temperature ===\n")
 
 
 def input_temperature(temp_str: str) -> int:
@@ -22,21 +20,20 @@ def input_temperature(temp_str: str) -> int:
     return (temp)
 
 
-def test_temperature() -> None:
-    input_data = 'lkj'
+def test_temperature(test: str) -> None:
     try:
-        converted_data = input_temperature(input_data)
-        try:
-            print(f"Input data is '{converted_data}'")
-            print(f"Temperature is now {converted_data}°C")
-        except Exception as error:
-            print(f"Input data is '{converted_data}'")
-            print("Caught input_temperature error:", error)
+        print(f"Input data is {test!r}")
+        converted_data = input_temperature(test)
+        print(f"Temperature is now {converted_data}°C")
     except Exception as error_exception:
-        print(f"Input data '{input_data}'")
-        print("Caught input_temperature error: ", error_exception)
-    print("\nAll tests completed - program didn\'t crash!")
+        print(f"Caught input_temperature error: {error_exception}")
+    print()
 
 
 if __name__ == "__main__":
-    test_temperature()
+    print("=== Garden temperature ===\n")
+    test_temperature("25")
+    test_temperature("abc")
+    test_temperature("100")
+    test_temperature("-50")
+    print("All tests completed - program didn\'t crash!")
