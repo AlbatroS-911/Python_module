@@ -1,4 +1,4 @@
-from python_module_6.elements import create_water
+from elements import create_water
 
 print("=== Alembic 1 ===")
 print("Using: 'from ... import ...' structure to access elements.py")
