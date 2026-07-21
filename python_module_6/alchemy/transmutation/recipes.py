@@ -1,5 +1,5 @@
-from alchemy import create_air
-from alchemy.potions import strength_potion
+from alchemy.elements import create_air
+from ..potions import strength_potion
 import elements
 
 

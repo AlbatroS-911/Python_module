@@ -5,5 +5,8 @@ print("Accessing the alchemy module using 'import alchemy'")
 print(f"Testing create_air: {alchemy.create_air()}")
 print("Now show that not all functions can be reached")
 print("This will raise an exception!")
-print("Testing the hidden create_earth: ", end="")
-print(f"{alchemy.elements.create_earth()}")
+try:
+    print("Testing the hidden create_earth: ", end="")
+    print(f"{alchemy.create_earth()}")
+except AttributeError as err:
+    print(f"Import module error: {err}")

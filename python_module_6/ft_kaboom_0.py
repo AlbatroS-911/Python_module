@@ -1,9 +1,10 @@
 import alchemy.grimoire
 
+
 print("=== Kaboom 0 ===")
 print("Using grimoire module directly")
 name: str = "Fantasy"
-ingredients: str = "water"
+ingredients: str = "trondro, wind, fire"
 spell_record: str = alchemy.grimoire.light_spell_record(name, ingredients)
 validate: str = alchemy.grimoire.validate_ingredients(ingredients)
 print(

@@ -1,10 +1,10 @@
 import elements
-import alchemy
+from .elements import create_air, create_earth
 
 
 def healing_potion() -> str:
-    earth: str = alchemy.elements.create_earth()
-    air: str = alchemy.elements.create_air()
+    earth: str = create_earth()
+    air: str = create_air()
     return f"Healing potion brewed with {earth!r} and {air!r}"
 
 
