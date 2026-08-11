@@ -3,7 +3,6 @@ import sys
 
 
 def extract_text(filename: str) -> None:
-    print("=== Cyber Archives Recovery && Preservation ===")
     print(f"Accessing file {filename!r}")
     try:
         fd: typing.IO[str] = open(filename, 'r')
@@ -15,6 +14,7 @@ def extract_text(filename: str) -> None:
 
 
 if __name__ == "__main__":
+    print("=== Cyber Archives Recovery && Preservation ===")
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} <file>")
     else:
@@ -28,6 +28,7 @@ if __name__ == "__main__":
                 print(f"{new_line}#")
             print()
             print("---")
+            file.close()
             new_file = str(input("Enter new file name (or empty): "))
             try:
                 opened_file = open(f"{sys.argv[1]}", 'r')
@@ -41,6 +42,8 @@ if __name__ == "__main__":
                 dest.close()
             except (FileNotFoundError, PermissionError):
                 print("No saving data")
+        except Exception:
+            print(end="")
         except KeyboardInterrupt:
             print()
             print("Program interrupted...")

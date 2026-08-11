@@ -5,7 +5,7 @@ import typing
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self.data: typing.Any = None
+        self.data: list[typing.Any] = []
 
     @abstractmethod
     def validate(self, data: typing.Any) -> bool:
@@ -15,32 +15,36 @@ class DataProcessor(ABC):
     def ingest(self, data: typing.Any) -> None:
         pass
 
-    def output(self) -> tuple[int, str] | None:
+    def output(self) -> tuple[int, str]:
         if not self.data:
-            return None
-        return (len(self.data), str(self.data))
+            raise IndexError("No data in the processor...")
+        item = self.data.pop(0)
+        return (1, str(item))
 
 
 class NumericProcessor(DataProcessor):
 
     def __init__(self) -> None:
         super().__init__()
-        self.data: list[int | float] = []
+        self.data = []
 
     def validate(self, data: typing.Any) -> bool:
+        if isinstance(data, bool):
+            return False
         if isinstance(data, (int, float)):
             return True
         if isinstance(data, (list, tuple)):
-            return all(isinstance(i, (int, float))
+            return all(isinstance(i, (int, float)) and not isinstance(i, bool)
                        for i in data
                        )
         return False
 
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
-            raise Exception("Got exception: Improper numeric data")
+            raise Exception(" Got exception: Improper numeric data")
         if isinstance(data, (list, tuple)):
-            self.data.extend(data)
+            for item in data:
+                self.data.append(str(item))
         else:
             self.data.append(data)
 
@@ -60,7 +64,7 @@ class TextProcessor(DataProcessor):
 
     def ingest(self, data: str | list[str]) -> None:
         if not self.validate(data):
-            raise Exception("Got exception: Improper text data")
+            raise Exception(" Got exception: Improper text data")
         if isinstance(data, (list, tuple)):
             self.data.extend(data)
         else:
@@ -70,7 +74,10 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
     def __init__(self) -> None:
         super().__init__()
-        self.data: list[dict[str, str]] = []
+        self.data: list[str] = []
+
+    def _str_conversion(self, d: dict[str, str]) -> str:
+        return f"{d['log_level']}: {d['log_message']}"
 
     def validate(self, data: typing.Any) -> bool:
         if isinstance(data, dict):
@@ -82,11 +89,12 @@ class LogProcessor(DataProcessor):
 
     def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
         if not self.validate(data):
-            raise Exception("Got exception: Improper dict data")
+            raise Exception(" Got exception: Improper dict data")
         if isinstance(data, (list, tuple)):
-            self.data.extend(data)
+            for d in data:
+                self.data.append(self._str_conversion(d))
         else:
-            self.data.append(data)
+            self.data.append(self._str_conversion(data))
 
 
 def main() -> None:
@@ -94,44 +102,66 @@ def main() -> None:
     print()
     num_data = NumericProcessor()
     print("Testing Numeric Processor...")
-    print(f"Trying to validate input '42': {num_data.validate(42)}")
-    print(f"Trying to validate input 'Hello': {num_data.validate('Hello')}")
-    print("Test invalid ingestion of string 'foo' without prior validation:")
+    print(f" Trying to validate input '42': {num_data.validate(42)}")
+    print(f" Trying to validate input 'Hello': {num_data.validate('Hello')}")
+    print(" Test invalid ingestion of string 'foo' without prior validation:")
     try:
         num_data.ingest('foo')
     except Exception as err:
         print(err)
-    num_test: list[int | float] = [1, 2, 3, 4, 5]
-    print(f"Processing data: {num_test}")
+    num_test: list[int | float] = [1, 2, 3]
+    print(num_data.validate(num_test))
     num_data.ingest(num_test)
-    print("Extracting 3 values...")
-    for value in range(3):
-        print(f"Numeric value {value}: {num_data.data[value]}")
+    count, value = num_data.output()
+    print(f"{count}, {value}")
+    print(f" Processing data: {num_test}")
+    try:
+        num_data.ingest(num_test)
+    except Exception as err:
+        print(err)
+    print(" Extracting 3 values...")
+    try:
+        for i in range(3):
+            count, value = num_data.output()
+            print(f" Numeric value {i}: {value}")
+    except IndexError:
+        print(" An invalid data detected...")
     print()
-    print("Testing Log Processor...")
+    print("Testing Text Processor...")
     str_data = TextProcessor()
-    print(f"Trying to validate input '42': {str_data.validate(42)}")
-    print("Testing of invalid data without validation:")
-    str_test: list[str] = ['Hello', 'Nexus', 'World']
-    print(f"Processing data: {str_test}")
-    str_data.ingest(str_test)
-    print("Exctracting 1 value...")
-    print(f"Text value 0: {str_data.data[0]}")
+    print(f" Trying to validate input '42': {str_data.validate(42)}")
+    str_test: list[str] = ['Hello', "Nexus", 'World']
+    print(f" Processing data: {str_test}")
+    try:
+        str_data.ingest(str_test)
+    except Exception as err:
+        print(err)
+    print(" Exctracting 1 value...")
+    try:
+        count, value = str_data.output()
+        print(f" Text value {count - 1}: {value}")
+    except IndexError as err:
+        print(err)
     print()
     print("Testing Log Processor...")
     log_data = LogProcessor()
-    print(f"Trying to validate input 'Hello': {log_data.validate('Hello')}")
+    print(f" Trying to validate input 'Hello': {log_data.validate('Hello')}")
     log_test: list[dict[str, str]] = [{'log_level': 'NOTICE',
                                        'log_message': 'Connection to server'},
                                       {'log_level': 'ERROR',
                                        'log_message': 'Unauthorized access!!'}]
-    print(f"Processing data: {log_test}")
-    log_data.ingest(log_test)
-    print("Extracting 2 values...")
-    for i, d in enumerate(log_data.data[0:]):
-        if "log_level" and "log_message" in d:
-            print(
-                f"Log entry {i}: {d.get('log_level')}: {d.get('log_message')}")
+    print(f" Processing data: {log_test}")
+    try:
+        log_data.ingest(log_test)
+    except Exception as err:
+        print(err)
+    print(" Extracting 2 values...")
+    for i in range(2):
+        try:
+            count, value = log_data.output()
+            print(f" Log entry {i}: {value}")
+        except IndexError:
+            print(" An invalid data detected...")
 
 
 if __name__ == "__main__":

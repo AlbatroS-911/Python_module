@@ -4,8 +4,9 @@ import typing
 
 class DataProcessor(ABC):
     def __init__(self) -> None:
-        self.data: typing.Any = None
+        self.data: list[typing.Any] = []
         self._processed = 0
+        self._output_count: int = 0
 
     @abstractmethod
     def validate(self, data: typing.Any) -> bool:
@@ -15,20 +16,24 @@ class DataProcessor(ABC):
     def ingest(self, data: typing.Any) -> None:
         pass
 
-    def output(self) -> tuple[int, str] | None:
+    def output(self) -> tuple[int, str]:
         if not self.data:
-            return None
+            raise IndexError("No data in the processor...")
         item = self.data.pop(0)
-        return (1, str(item))
+        count = self._output_count
+        self._output_count += 1
+        return (count, str(item))
 
 
 class NumericProcessor(DataProcessor):
 
     def __init__(self) -> None:
         super().__init__()
-        self.data: list[int | float] = []
+        self.data = []
 
     def validate(self, data: typing.Any) -> bool:
+        if isinstance(data, bool):
+            return False
         if isinstance(data, (int, float)):
             return True
         if isinstance(data, (list, tuple)):
@@ -41,7 +46,8 @@ class NumericProcessor(DataProcessor):
         if not self.validate(data):
             raise Exception("Got exception: Improper numeric data")
         if isinstance(data, (list, tuple)):
-            self.data.extend(data)
+            for item in data:
+                self.data.append(str(item))
             self._processed += len(data)
         else:
             self.data.append(data)
@@ -75,7 +81,10 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
     def __init__(self) -> None:
         super().__init__()
-        self.data: list[dict[str, str]] = []
+        self.data: list[str] = []
+
+    def _str_conversion(self, d: dict[str, str]) -> str:
+        return f"{d['log_level']}: {d['log_message']}"
 
     def validate(self, data: typing.Any) -> bool:
         if isinstance(data, dict):
@@ -89,10 +98,11 @@ class LogProcessor(DataProcessor):
         if not self.validate(data):
             raise Exception("Got exception: Improper dict data")
         if isinstance(data, (list, tuple)):
-            self.data.extend(data)
+            for d in data:
+                self.data.append(self._str_conversion(d))
             self._processed += len(data)
         else:
-            self.data.append(data)
+            self.data.append(self._str_conversion(data))
             self._processed += 1
 
 
@@ -162,10 +172,11 @@ class DataStream():
         for processor in self._processors:
             registered: list[tuple[int, str]] = []
             for i in range(nb):
-                result = processor.output()
-                if result is None:
+                try:
+                    result = processor.output()
+                    registered.append(result)
+                except IndexError:
                     break
-                registered.append(result)
             plugin.process_output(registered)
 
 
@@ -196,7 +207,10 @@ def main() -> None:
     data_stream.print_processors_stats()
     print()
     print("Send 3 processed data from each processor to a CSV plugin:")
-    data_stream.output_pipeline(3, CSVExportPlugin())
+    try:
+        data_stream.output_pipeline(3, CSVExportPlugin())
+    except Exception as err:
+        print(f" CSV pipeline error: {err}")
     print()
     data_stream.print_processors_stats()
     print()
@@ -214,7 +228,10 @@ def main() -> None:
     data_stream.print_processors_stats()
     print()
     print("Send 5 processed data from each processor to a JSON plugin:")
-    data_stream.output_pipeline(5, JSONExportPlugin())
+    try:
+        data_stream.output_pipeline(5, JSONExportPlugin())
+    except Exception as err:
+        print(f" JSON pipeline error: {err}")
     print()
     data_stream.print_processors_stats()
 

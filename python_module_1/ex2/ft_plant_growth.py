@@ -37,4 +37,3 @@ if __name__ == "__main__":
         print(f"=== Day {i} ===")
         rose.show()
     print(f"Growth this week: {round(rose.height - initial_height, 1)}cm")
-    

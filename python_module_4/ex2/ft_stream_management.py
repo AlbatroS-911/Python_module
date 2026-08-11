@@ -1,17 +1,4 @@
-# ************************************************************************* #
-#                                                                           #
-#                                                      :::      ::::::::    #
-#  ft_stream_management.py                           :+:      :+:    :+:    #
-#                                                  +:+ +:+         +:+      #
-#  By: tokrabem <tokrabem@student.42.fr>         +#+  +:+       +#+         #
-#                                              +#+#+#+#+#+   +#+            #
-#  Created: 2026/06/02 15:22:38 by tokrabem        #+#    #+#               #
-#  Updated: 2026/07/14 00:14:24 by tokrabem        ###   ########.fr        #
-#                                                                           #
-# ************************************************************************* #
-
-
-from typing import IO
+import typing
 import sys
 
 
@@ -19,7 +6,7 @@ def extract_text(filename: str) -> None:
     print("=== Cyber Archives Recovery && Preservation ===")
     print(f"Accessing file {filename!r}")
     try:
-        fd: IO[str] = open(f"{filename}", 'r')
+        fd: typing.IO[str] = open(f"{filename}", 'r')
         print(f"---\n\n{fd.read()}\n\n---")
         fd.close()
         print(f"File {filename!r} closed.\n")
@@ -42,6 +29,7 @@ if __name__ == "__main__":
                 print(f"{new_line}#")
             print()
             print("---")
+            file.close()
             sys.stdout.write("Enter new file name (or empty): ")
             sys.stdout.flush()
             new_file = sys.stdin.readline().strip()
@@ -55,8 +43,10 @@ if __name__ == "__main__":
                 print(f"Data saved in file {new_file!r}.\n")
                 opened_file.close()
                 dest.close()
-            except (FileNotFoundError, PermissionError) as e:
+            except (FileNotFoundError, PermissionError):
                 print("No saving data", file=sys.stderr)
-        except KeyboardInterrupt as f:
+        except Exception:
+            print(end="")
+        except KeyboardInterrupt:
             print()
-            print("Program interrupted...:", file=sys.stderr)
+            print("Program interrupted...", file=sys.stderr)
